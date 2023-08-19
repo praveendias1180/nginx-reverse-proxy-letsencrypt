@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  reverse:
+    container_name: reverse
+    hostname: reverse
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./certs/fullchain.pem:/certs/fullchain.pem
+      - ./certs/privkey.pem:/certs/privkey.pem
+      - ./config:/etc/nginx/conf.d
+      - ./root:/nginx/root
+  gtmss:
+    container_name: gtmss
+    hostname: gtmss
+    image: gcr.io/cloud-tagging-10302018/gtm-cloud-image:stable
+    ports:
+      - 8080:8080 
+    environment:
+      - CONTAINER_CONFIG=YOURGTMSSCONFIGSTRING==
